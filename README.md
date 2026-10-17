@@ -15,3 +15,16 @@ OpenAI API
    ↓
 React dashboard
 ```
+
+job-finder/
+├── pyproject.toml
+├── .env
+├── .gitignore
+├── main.py
+├── utils/
+│ ├── **init**.py
+│ └── jobs_api.py
+├── database/
+│ ├── **init**.py
+│ └── db.py
+└── frontend/
