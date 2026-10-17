@@ -28,3 +28,4 @@ job-finder/
 │ ├── **init**.py
 │ └── db.py
 └── frontend/
+![alt text](image.png)
