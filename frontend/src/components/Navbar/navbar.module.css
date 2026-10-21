@@ -1,0 +1,12 @@
+a{
+    display:flex;
+    
+}
+
+.profile{
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    background-color: #F2F2ED;
+    margin-right :20px;
+}
