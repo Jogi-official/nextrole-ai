@@ -20,6 +20,23 @@ function Sidebar() {
 
   return (
     <aside className={styles.sidebar}>
+      {/* Search Jobs */}
+      <div className={styles.searchSection}>
+        <h3 className={styles.searchTitle}>Search Jobs</h3>
+
+        <div className={styles.searchBox}>
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m16 16 5 5" />
+          </svg>
+          <input
+            type="text"
+            placeholder="e.g. React, Python, AI Engineer..."
+            aria-label="Search jobs"
+          />
+        </div>
+      </div>
+
       {/* Location */}
       <div className={styles.locationSection}>
         <h3 className={styles.sectionTitle}>

@@ -1,3 +1,5 @@
+import JobDetails from "./components/JobDetails";
+import JobListings from "./components/JobListings";
 import Sidebar from "./components/Sidebar";
 import styles from "./main.module.css";
 
@@ -8,10 +10,10 @@ function Main() {
         <Sidebar />
       </div>
       <div id="listArea" className={styles.listArea}>
-        List Area content
+        <JobListings />
       </div>
       <div id="selectedArea" className={styles.selectedArea}>
-        Selected Area content
+        <JobDetails />
       </div>
     </div>
   );
