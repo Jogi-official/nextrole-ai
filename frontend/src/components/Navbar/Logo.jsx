@@ -1,8 +1,9 @@
+import { Link } from "react-router";
 import Icon from "../Icon";
 
 function Logo() {
   return (
-    <a href="" className="flex flex-row items-center gap-3 md:gap-4">
+    <Link to="/" className="flex flex-row items-center gap-3 md:gap-4">
       <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-white shadow-md shadow-blue-600/30 md:h-11 md:w-11">
         <Icon name="sparkles" className="h-5 w-5 md:h-6 md:w-6" />
       </div>
@@ -14,7 +15,7 @@ function Logo() {
           Smarter Jobs Better Role
         </span>
       </div>
-    </a>
+    </Link>
   );
 }
 

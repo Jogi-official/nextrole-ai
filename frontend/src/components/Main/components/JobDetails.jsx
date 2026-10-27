@@ -1,5 +1,5 @@
-import { useState } from "react";
 import Icon, { VerifiedBadge } from "../../Icon";
+import { useSavedJobs } from "../../../context/SavedJobsContext";
 import CompanyLogo from "./CompanyLogo";
 
 const jobDetails = {
@@ -86,8 +86,10 @@ const RING_RADIUS = 34;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 export default function JobDetails({ jobId = 1 }) {
-  const [saved, setSaved] = useState(false);
+  const { isSaved, toggleSave } = useSavedJobs();
   const job = jobDetails[jobId] || jobDetails[1];
+  const shownJobId = jobDetails[jobId] ? jobId : 1;
+  const saved = isSaved(shownJobId);
 
   return (
     <aside className="min-w-0 p-4 text-slate-800 sm:p-6">
@@ -103,7 +105,7 @@ export default function JobDetails({ jobId = 1 }) {
 
         <button
           type="button"
-          onClick={() => setSaved(!saved)}
+          onClick={() => toggleSave(shownJobId)}
           className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition hover:bg-blue-50 ${
             saved
               ? "border-blue-300 bg-blue-50 text-blue-700"
@@ -285,7 +287,7 @@ export default function JobDetails({ jobId = 1 }) {
 
         <button
           type="button"
-          onClick={() => setSaved(!saved)}
+          onClick={() => toggleSave(shownJobId)}
           className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-blue-600 transition hover:bg-blue-50"
         >
           <svg

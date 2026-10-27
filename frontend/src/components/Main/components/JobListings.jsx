@@ -1,71 +1,14 @@
 import { useState } from "react";
 import Icon, { VerifiedBadge } from "../../Icon";
 import CompanyLogo from "./CompanyLogo";
-
-const jobs = [
-  {
-    id: 1,
-    title: "Senior Software Engineer (AI)",
-    company: "Microsoft",
-    location: "Remote",
-    experience: "5+ years",
-    type: "Full-time",
-    level: "Senior Level",
-    match: 92,
-    description:
-      "Join our AI team to build next-generation AI products using Python, Azure, and modern web technologies. Experience with LLMs, RAG and cloud architecture is a plus.",
-    skills: ["Python", "Azure", "React", "TypeScript", "LLMs", "RAG"],
-    posted: "Posted 2 days ago",
-  },
-  {
-    id: 2,
-    title: "Frontend Developer (React)",
-    company: "Google",
-    location: "Remote",
-    experience: "3+ years",
-    type: "Full-time",
-    level: "Mid Level",
-    match: 88,
-    description:
-      "Work on products that impact billions of users. We are looking for a skilled React developer with strong JavaScript and TypeScript experience.",
-    skills: ["React", "TypeScript", "JavaScript", "CSS"],
-    posted: "Posted 3 days ago",
-  },
-  {
-    id: 3,
-    title: "Full Stack Developer",
-    company: "Amazon",
-    location: "Remote",
-    experience: "3+ years",
-    type: "Full-time",
-    level: "Mid Level",
-    match: 82,
-    description:
-      "Build and maintain web applications using React, Node.js and AWS. Experience with databases and REST APIs is required.",
-    skills: ["React", "Node.js", "AWS", "JavaScript"],
-    posted: "Posted 1 day ago",
-  },
-  {
-    id: 4,
-    title: "Software Engineer (Backend)",
-    company: "Apple",
-    location: "Remote",
-    experience: "3+ years",
-    type: "Full-time",
-    level: "Mid Level",
-    match: 78,
-    description:
-      "Join our backend team to build scalable services using Python, FastAPI and cloud technologies.",
-    skills: ["Python", "FastAPI", "AWS", "Docker"],
-    posted: "Posted 4 days ago",
-  },
-];
+import { jobs } from "../../../data/jobs";
+import { useSavedJobs } from "../../../context/SavedJobsContext";
 
 const MAX_VISIBLE_SKILLS = 4;
 
 export default function JobListings() {
   const [selectedJob, setSelectedJob] = useState(1);
-  const [savedJobs, setSavedJobs] = useState([]);
+  const { isSaved: isJobSaved, toggleSave } = useSavedJobs();
   const [sortBy, setSortBy] = useState("Best Match");
 
   const sortedJobs = [...jobs].sort((a, b) => {
@@ -73,14 +16,6 @@ export default function JobListings() {
     if (sortBy === "Company A-Z") return a.company.localeCompare(b.company);
     return a.title.localeCompare(b.title);
   });
-
-  function toggleSave(id) {
-    setSavedJobs((previous) =>
-      previous.includes(id)
-        ? previous.filter((jobId) => jobId !== id)
-        : [...previous, id],
-    );
-  }
 
   return (
     <section className="min-w-0 p-3 text-slate-800 sm:p-4">
@@ -113,7 +48,7 @@ export default function JobListings() {
       <div className="space-y-4">
         {sortedJobs.map((job) => {
           const isSelected = selectedJob === job.id;
-          const isSaved = savedJobs.includes(job.id);
+          const isSaved = isJobSaved(job.id);
           const visibleSkills = job.skills.slice(0, MAX_VISIBLE_SKILLS);
           const hiddenCount = job.skills.length - visibleSkills.length;
 
