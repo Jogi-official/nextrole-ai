@@ -12,6 +12,7 @@ I am learning. **Always explain as if I don't know anything yet.**
 - Prefer small steps I can follow and run myself over large changes all at once.
 - After a change, tell me how to run or test it so I can see it working.
 - If I'm about to do something that's a bad practice, stop and teach me the better way.
+- Add in features.md whenever i finish some task with the details about the feature
 
 ## What this project is
 
@@ -32,12 +33,12 @@ React (frontend/) ──► Node + Express (jobs_api/) ──► SQL Server
 
 ## Current state (what actually exists)
 
-| Folder / file | Status |
-| --- | --- |
-| `frontend/` | UI complete, but **all data is hard-coded mock data** inside the components. No API calls yet. |
-| `jobs_api/` | Express skeleton. `/api/health` works; `/api/jobs` and `/api/jobs/:id` are stubs (`[]` / 404). No database connection yet. |
-| `main.py`, `utils/jobs_api.py` | Python prototype that fetches jobs from the Remotive API. Planned to move into `ai-service/`. |
-| `database/` | Empty folder (untracked). `schema.sql` described in README doesn't exist yet. |
+| Folder / file                  | Status                                                                                                                     |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| `frontend/`                    | UI complete, but **all data is hard-coded mock data** inside the components. No API calls yet.                             |
+| `jobs_api/`                    | Express skeleton. `/api/health` works; `/api/jobs` and `/api/jobs/:id` are stubs (`[]` / 404). No database connection yet. |
+| `main.py`, `utils/jobs_api.py` | Python prototype that fetches jobs from the Remotive API. Planned to move into `ai-service/`.                              |
+| `database/`                    | Empty folder (untracked). `schema.sql` described in README doesn't exist yet.                                              |
 
 We're at the start of **README Phase 1** (Node API + SQL Server with mock data).
 
@@ -70,7 +71,7 @@ uv run main.py
 ### Frontend (`frontend/src`)
 
 - React 19 + Vite 8, plain JavaScript (`.jsx`), ES modules.
-- **Routing:** React Router v8 (`react-router` package — import from `"react-router"`, not `react-router-dom`). `BrowserRouter` is in `main.jsx`; routes are in `App.jsx`: `/` → `Main` (Home), `/saved` → `pages/SavedPage`, `/profile` → `pages/ProfilePage`, anything else redirects to `/`. Use `<Link>`/`<NavLink>` for internal links, never `<a href>` (that reloads the page).
+- **Routing:** React Router v8 (`react-router` package — import from `"react-router"`, not `react-router-dom`). `BrowserRouter` is in `main.jsx`; routes are in `App.jsx`: `/` → `Main` (Home), `/saved` → `components/Main/pages/SavedPage`, `/profile` → `components/Main/pages/ProfilePage`, anything else (`*`) → `components/Main/pages/NotFoundPage`. Use `<Link>`/`<NavLink>` for internal links, never `<a href>` (that reloads the page).
 - **Shared state** lives in `src/context/`: `ProfileProvider` (name, photo as data URL, "about me" prompt) and `SavedJobsProvider` (saved job ids). Read them with the `useProfile()` / `useSavedJobs()` hooks. Context + hook are in a `.js` file and the Provider in a `.jsx` file because the `react-refresh` lint rule wants component files to export only components. Both currently persist to `localStorage` (via `context/storage.js`) as a stand-in until the API has `/api/profile` and `/api/saved`.
 - Mock jobs list is in `src/data/jobs.js` (shared by Home and Saved). `JobDetails.jsx` still has its own richer mock `jobDetails` object.
 - Resume upload on the Profile page is **UI only**: the file stays in component state and isn't sent anywhere (README Phase 3 will wire it to Node → Python).
@@ -78,7 +79,7 @@ uv run main.py
 - `components/Navbar/` — `Logo`, `SectionNavigator`, `Profile`.
 - `components/Icon.jsx` — inline SVG icon set; use `<Icon name="..." />` and add new icons to the `icons` map rather than adding an icon library.
 - **Styling is mixed on purpose:** layout containers (`Main`, `Sidebar`, `Navbar`) use **CSS Modules** (`*.module.css`, imported as `styles`); newer/inner components (`JobListings`, `JobDetails`, `Navbar` markup) use **Tailwind** utility classes. Follow whichever style the file you're editing already uses.
-- Job *selection* is not shared yet — `JobDetails` takes a `jobId` prop (defaults to `1`); nothing passes the selected card from `JobListings` to it.
+- Job _selection_ is not shared yet — `JobDetails` takes a `jobId` prop (defaults to `1`); nothing passes the selected card from `JobListings` to it.
 - Mock job shape (in `data/jobs.js`): `{ id, title, company, location, experience, type, level, match, description, skills[], posted }`. Keep the future API response compatible with this.
 
 ### Jobs API (`jobs_api/src`)

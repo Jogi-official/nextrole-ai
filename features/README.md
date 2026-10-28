@@ -8,11 +8,11 @@ One file per feature. Each file tracks **what's done** (with dates) and **what s
 | --- | --- | --- | --- |
 | 01 | [Project setup](01-project-setup.md) | ✅ Done | 2026-10-27 |
 | 02 | [Navbar](02-navbar.md) | ✅ Done | 2026-10-27 |
-| 03 | [Sidebar filters](03-sidebar-filters.md) | 🟡 UI done, logic to do | 2026-10-25 |
-| 04 | [Job listings & details](04-job-listings-and-details.md) | 🟡 UI done, logic to do | 2026-10-27 |
+| 03 | [Sidebar filters](03-sidebar-filters.md) | 🟡 Search works, other filters to do | 2026-10-28 |
+| 04 | [Job listings & details](04-job-listings-and-details.md) | 🟡 UI done, logic to do | 2026-10-28 |
 | 05 | [Jobs API (Node)](05-jobs-api.md) | 🟡 Skeleton only | 2026-10-26 |
 | 06 | [Documentation](06-documentation.md) | ✅ Done (ongoing) | 2026-10-27 |
-| 07 | [Routing](07-routing.md) | ✅ Done | 2026-10-27 |
+| 07 | [Routing](07-routing.md) | ✅ Done | 2026-10-28 |
 | 08 | [Saved jobs](08-saved-jobs.md) | 🟡 Works locally, backend to do | 2026-10-27 |
 | 09 | [Profile](09-profile.md) | 🟡 Works locally, backend to do | 2026-10-27 |
 | 10 | [Resume upload](10-resume-upload.md) | 🟡 UI only | 2026-10-27 |
