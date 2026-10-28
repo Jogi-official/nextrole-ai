@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import Icon from "../components/Icon";
-import { getInitials, useProfile } from "../context/ProfileContext";
+import Icon from "../../Icon";
+import { getInitials, useProfile } from "../../../context/ProfileContext";
 
 const MAX_ABOUT_LENGTH = 2000;
 const MAX_PHOTO_MB = 5;
@@ -76,11 +76,17 @@ function ProfilePage() {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      setStatus({ type: "error", text: "Please choose an image file (JPG, PNG, WebP…)." });
+      setStatus({
+        type: "error",
+        text: "Please choose an image file (JPG, PNG, WebP…).",
+      });
       return;
     }
     if (file.size > MAX_PHOTO_MB * 1024 * 1024) {
-      setStatus({ type: "error", text: `Image must be under ${MAX_PHOTO_MB} MB.` });
+      setStatus({
+        type: "error",
+        text: `Image must be under ${MAX_PHOTO_MB} MB.`,
+      });
       return;
     }
 
@@ -96,11 +102,17 @@ function ProfilePage() {
 
     const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
     if (!RESUME_TYPES.includes(extension)) {
-      setStatus({ type: "error", text: "Resume must be a PDF or Word document." });
+      setStatus({
+        type: "error",
+        text: "Resume must be a PDF or Word document.",
+      });
       return;
     }
     if (file.size > MAX_RESUME_MB * 1024 * 1024) {
-      setStatus({ type: "error", text: `Resume must be under ${MAX_RESUME_MB} MB.` });
+      setStatus({
+        type: "error",
+        text: `Resume must be under ${MAX_RESUME_MB} MB.`,
+      });
       return;
     }
 
@@ -129,7 +141,10 @@ function ProfilePage() {
     setStatus(
       stored
         ? { type: "success", text: "Profile saved." }
-        : { type: "error", text: "Saved for this visit, but the browser couldn't store it." },
+        : {
+            type: "error",
+            text: "Saved for this visit, but the browser couldn't store it.",
+          },
     );
   }
 
@@ -198,7 +213,9 @@ function ProfilePage() {
 
             {/* Name */}
             <label className="mt-6 block">
-              <span className="text-sm font-semibold text-slate-900">Display name</span>
+              <span className="text-sm font-semibold text-slate-900">
+                Display name
+              </span>
               <input
                 type="text"
                 value={draft.name}
@@ -216,8 +233,9 @@ function ProfilePage() {
                 Describe yourself
               </span>
               <span className="mt-1 block text-xs text-slate-500">
-                Our AI reads this to find jobs and calculate your match score. Mention your
-                skills, years of experience, the roles you want, and where you'd like to work.
+                Our AI reads this to find jobs and calculate your match score.
+                Mention your skills, years of experience, the roles you want,
+                and where you'd like to work.
               </span>
               <textarea
                 value={draft.about}
@@ -238,10 +256,15 @@ function ProfilePage() {
                 <span
                   role="status"
                   className={`mr-auto flex items-center gap-1.5 text-sm ${
-                    status.type === "success" ? "text-emerald-600" : "text-red-600"
+                    status.type === "success"
+                      ? "text-emerald-600"
+                      : "text-red-600"
                   }`}
                 >
-                  <Icon name={status.type === "success" ? "check" : "info"} className="h-4 w-4" />
+                  <Icon
+                    name={status.type === "success" ? "check" : "info"}
+                    className="h-4 w-4"
+                  />
                   {status.text}
                 </span>
               )}
@@ -279,8 +302,12 @@ function ProfilePage() {
                   {resume.name.split(".").pop()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-slate-900">{resume.name}</p>
-                  <p className="text-xs text-slate-500">{formatFileSize(resume.size)}</p>
+                  <p className="truncate text-sm font-medium text-slate-900">
+                    {resume.name}
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    {formatFileSize(resume.size)}
+                  </p>
                 </div>
                 <button
                   type="button"
@@ -310,7 +337,8 @@ function ProfilePage() {
                   <Icon name="briefcase" className="h-5 w-5" />
                 </span>
                 <span className="text-sm font-medium text-slate-900">
-                  Drop your resume here, or <span className="text-blue-600">browse</span>
+                  Drop your resume here, or{" "}
+                  <span className="text-blue-600">browse</span>
                 </span>
                 <span className="mt-1 text-xs text-slate-500">
                   PDF or Word, up to {MAX_RESUME_MB} MB
@@ -331,8 +359,8 @@ function ProfilePage() {
 
             <p className="mt-4 flex items-start gap-2 rounded-lg bg-slate-50 p-3 text-xs text-slate-500">
               <Icon name="info" className="mt-0.5 h-4 w-4 shrink-0" />
-              Resume upload is coming soon. For now, your file stays in this browser tab and
-              isn't sent anywhere.
+              Resume upload is coming soon. For now, your file stays in this
+              browser tab and isn't sent anywhere.
             </p>
           </section>
         </div>

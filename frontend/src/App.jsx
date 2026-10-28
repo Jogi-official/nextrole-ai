@@ -1,10 +1,10 @@
-import { Navigate, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 import "./App.css";
 import Main from "./components/Main/Main";
 import Navbar from "./components/Navbar/Navbar";
-import ProfilePage from "./pages/ProfilePage";
-import SavedPage from "./pages/SavedPage";
-
+import SavedPage from "./components/Main/pages/SavedPage";
+import ProfilePage from "./components/Main/pages/ProfilePage";
+import NotFoundPage from "./components/Main/pages/NotFoundPage";
 function App() {
   return (
     <>
@@ -13,8 +13,8 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/saved" element={<SavedPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        {/* Unknown URLs go back to Home */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* Any URL that didn't match above shows the 404 page */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

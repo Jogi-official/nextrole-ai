@@ -6,12 +6,23 @@ import { useSavedJobs } from "../../../context/SavedJobsContext";
 
 const MAX_VISIBLE_SKILLS = 4;
 
-export default function JobListings() {
+// True if the search text appears in the job's title, company, or any skill.
+function matchesSearch(job, query) {
+  const text = [job.title, job.company, ...job.skills].join(" ").toLowerCase();
+  return text.includes(query);
+}
+
+export default function JobListings({ search = "", onClearSearch }) {
   const [selectedJob, setSelectedJob] = useState(1);
   const { isSaved: isJobSaved, toggleSave } = useSavedJobs();
   const [sortBy, setSortBy] = useState("Best Match");
 
-  const sortedJobs = [...jobs].sort((a, b) => {
+  const query = search.trim().toLowerCase();
+  const filteredJobs = query
+    ? jobs.filter((job) => matchesSearch(job, query))
+    : jobs;
+
+  const sortedJobs = [...filteredJobs].sort((a, b) => {
     if (sortBy === "Best Match") return b.match - a.match;
     if (sortBy === "Company A-Z") return a.company.localeCompare(b.company);
     return a.title.localeCompare(b.title);
@@ -23,7 +34,7 @@ export default function JobListings() {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3 px-1">
         <h2 className="flex items-center gap-3 text-base font-semibold sm:text-lg text-slate-900">
           <Icon name="sparkles" className="h-5 w-5 text-blue-600" />
-          Found {jobs.length} jobs
+          Found {sortedJobs.length} {sortedJobs.length === 1 ? "job" : "jobs"}
         </h2>
 
         <label className="relative flex items-center gap-1 rounded-lg border border-slate-200 bg-white py-2 pl-3 pr-8 text-sm shadow-sm">
@@ -43,6 +54,33 @@ export default function JobListings() {
           />
         </label>
       </div>
+
+      {/* Empty state: the search matched nothing */}
+      {sortedJobs.length === 0 && (
+        <div className="flex flex-col items-center rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
+          <div className="relative mb-5">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+              <Icon name="search" className="h-7 w-7" />
+            </div>
+            <span className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-rose-100 text-rose-500">
+              <Icon name="x" className="h-3.5 w-3.5" strokeWidth={3} />
+            </span>
+          </div>
+          <h3 className="text-base font-semibold text-slate-900">No jobs found</h3>
+          <p className="mt-1 max-w-sm text-sm leading-6 text-slate-500">
+            Nothing matches{" "}
+            <span className="font-medium text-slate-700">"{search.trim()}"</span>.
+            Try a different job title, company, or skill.
+          </p>
+          <button
+            type="button"
+            onClick={onClearSearch}
+            className="mt-5 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+          >
+            Clear search
+          </button>
+        </div>
+      )}
 
       {/* Job cards */}
       <div className="space-y-4">

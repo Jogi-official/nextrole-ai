@@ -1,8 +1,8 @@
 import { Link } from "react-router";
-import Icon, { VerifiedBadge } from "../components/Icon";
-import CompanyLogo from "../components/Main/components/CompanyLogo";
-import { useSavedJobs } from "../context/SavedJobsContext";
-import { jobs } from "../data/jobs";
+import Icon, { VerifiedBadge } from "../../Icon";
+import CompanyLogo from "../components/CompanyLogo";
+import { useSavedJobs } from "../../../context/SavedJobsContext";
+import { jobs } from "../../../data/jobs";
 
 function SavedPage() {
   const { savedIds, toggleSave } = useSavedJobs();

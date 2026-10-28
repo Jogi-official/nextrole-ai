@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./sidebar.module.css";
 
-function Sidebar() {
+function Sidebar({ search, onSearchChange }) {
   const [jobTypes, setJobTypes] = useState(["Full-time", "Remote"]);
 
   const [experience, setExperience] = useState(["Mid Level"]);
@@ -33,6 +33,8 @@ function Sidebar() {
             type="text"
             placeholder="e.g. React, Python, AI Engineer..."
             aria-label="Search jobs"
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
           />
         </div>
       </div>
@@ -136,6 +138,7 @@ function Sidebar() {
         className={styles.searchButton}
         onClick={() =>
           console.log({
+            search,
             location,
             jobTypes,
             experience,
